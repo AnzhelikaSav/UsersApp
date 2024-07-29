@@ -1,5 +1,7 @@
 package com.example.data.repository
 
+import com.example.data.database.dao.UserDao
+import com.example.data.mappers.toDatabase
 import com.example.data.mappers.toDomain
 import com.example.data.network.api.UsersApi
 import com.example.domain.models.User
@@ -10,10 +12,17 @@ import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
     private val usersApi: UsersApi,
+    private val userDao: UserDao,
     private val dispatcher: CoroutineDispatcher
 ): UserRepository {
     override suspend fun getUsers(): List<User> = withContext(dispatcher) {
-        usersApi.getUsers().toDomain()
+        val users = userDao.getUsers()
+        if (users.isEmpty()) {
+            val loadedUsers = usersApi.getUsers()
+            userDao.insertUsers(loadedUsers.toDatabase())
+            loadedUsers.toDomain()
+        } else {
+            users.map { it.toDomain() }
+        }
     }
-
 }

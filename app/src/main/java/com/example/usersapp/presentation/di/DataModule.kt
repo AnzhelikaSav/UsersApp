@@ -1,15 +1,23 @@
 package com.example.usersapp.presentation.di
 
-import com.example.data.repository.UserRepositoryImpl
-import com.example.domain.repository.UserRepository
-import dagger.Binds
+import android.content.Context
+import com.example.data.database.AppDatabase
+import com.example.data.database.dao.UserDao
 import dagger.Module
+import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-interface DataModule {
-
-    @Binds
+class DataModule {
     @Singleton
-    fun bindUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository
+    @Provides
+    fun provideDatabase(context: Context): AppDatabase {
+        return AppDatabase.create(context)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserDao(appDatabase: AppDatabase): UserDao {
+        return appDatabase.userDao()
+    }
 }
