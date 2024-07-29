@@ -1,8 +1,13 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-kapt")
 }
+
+val baseApiUrl: String = gradleLocalProperties(rootDir).getProperty("BASE_API_URL")
+val apiKey: String = gradleLocalProperties(rootDir).getProperty("API_KEY")
 
 android {
     namespace = "com.example.usersapp"
@@ -19,6 +24,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            isMinifyEnabled = false
+            buildConfigField("String", "BASE_API_URL", "\"${baseApiUrl}\"")
+            buildConfigField("String", "API_KEY", "\"${apiKey}\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -36,6 +46,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -49,6 +60,12 @@ dependencies {
 
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
+
+    implementation(libs.retrofit)
+    implementation(libs.logging.interceptor)
+    implementation(libs.retrofit.converter.json)
+
+    implementation(libs.glide)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

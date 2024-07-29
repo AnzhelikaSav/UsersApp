@@ -35,6 +35,13 @@ android {
 
 dependencies {
 
+    implementation(project(":domain"))
+    implementation(libs.javax.inject)
+
+    implementation(libs.retrofit)
+    implementation(libs.logging.interceptor)
+    implementation(libs.retrofit.converter.json)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
