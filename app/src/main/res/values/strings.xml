@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">UsersApp</string>
     <string name="search">Search</string>
+    <string name="email">Email</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="delete_profile">Delete profile</string>
 </resources>

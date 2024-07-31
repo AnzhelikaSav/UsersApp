@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.domain.models.User
 import com.example.domain.usecase.GetUsersUseCase
 import kotlinx.coroutines.launch
+import java.util.UUID
 import javax.inject.Inject
 
 class UserListViewModel(
@@ -21,6 +22,10 @@ class UserListViewModel(
         viewModelScope.launch {
             _users.value = getUsersUseCase.execute()
         }
+    }
+
+    fun onUserClick(uuid: UUID) {
+
     }
 }
 

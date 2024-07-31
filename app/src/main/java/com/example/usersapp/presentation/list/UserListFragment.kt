@@ -9,14 +9,21 @@ import com.example.usersapp.R
 import com.example.usersapp.databinding.FragmentUserListBinding
 import com.example.usersapp.presentation.common.recycler.SpaceItemDecoration
 import com.example.usersapp.presentation.di.DiProvider
+import com.example.usersapp.presentation.navigation.Router
+import java.util.UUID
 import javax.inject.Inject
 
 class UserListFragment: Fragment(R.layout.fragment_user_list) {
 
     @Inject
+    lateinit var router: Router
+
+    @Inject
     lateinit var vmFactory: UserListViewModelFactory
 
     private val viewModel by viewModels<UserListViewModel> { vmFactory }
+
+    private lateinit var binding: FragmentUserListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,10 +32,14 @@ class UserListFragment: Fragment(R.layout.fragment_user_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentUserListBinding.bind(view)
+        binding = FragmentUserListBinding.bind(view)
 
+        setupRecycler()
+    }
+
+    private fun setupRecycler() {
         val adapter = UserAdapter { uuid ->
-
+            navigateToDetails(uuid)
         }
         val decoration = SpaceItemDecoration(
             spaceSize = resources.getDimensionPixelSize(
@@ -42,5 +53,10 @@ class UserListFragment: Fragment(R.layout.fragment_user_list) {
         viewModel.users.observe(viewLifecycleOwner) {
             adapter.items = it
         }
+    }
+
+    private fun navigateToDetails(uuid: UUID) {
+        val direction = UserListFragmentDirections.actionListUsersFragmentToUserDetailsFragment(uuid)
+        router.navigateTo(direction)
     }
 }

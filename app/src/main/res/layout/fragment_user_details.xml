@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?attr/colorPrimary">
+
+    <ImageView
+        android:id="@+id/ivBack"
+        android:layout_width="@dimen/size_24"
+        android:layout_height="@dimen/size_24"
+        android:layout_margin="@dimen/padding_24"
+        android:src="@drawable/ic_arrow_back"
+        app:tint="?attr/colorOnPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/ivAvatar"
+        android:layout_width="@dimen/size_136"
+        android:layout_height="@dimen/size_136"
+        android:layout_marginTop="@dimen/padding_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_16"
+        android:textSize="24sp"
+        android:textColor="?attr/colorOnPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivAvatar"
+        tools:text="Jhon Abraham"/>
+
+    <View
+        android:id="@+id/viewInfo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/padding_32"
+        android:background="@drawable/rectangle_top_rounded_40"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvName"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvEmailLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_40"
+        android:layout_marginStart="@dimen/padding_24"
+        android:textSize="14sp"
+        android:textColor="?attr/colorPrimary"
+        android:text="@string/email"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/viewInfo" />
+
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_4"
+        android:textSize="16sp"
+        android:textColor="?attr/colorOnBackground"
+        app:layout_constraintStart_toStartOf="@id/tvEmailLabel"
+        app:layout_constraintTop_toBottomOf="@id/tvEmailLabel"
+        tools:text="test@mail.ru"/>
+
+    <Button
+        android:id="@+id/btnEdit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_24"
+        android:layout_marginEnd="@dimen/padding_24"
+        android:layout_marginBottom="@dimen/padding_24"
+        android:text="@string/edit_profile"
+        android:textAllCaps="true"
+        android:textColor="?attr/colorOnPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnDelete"/>
+
+    <Button
+        style="@style/Widget.Material3.Button.TextButton"
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_40"
+        android:text="@string/delete_profile"
+        android:textColor="?attr/colorPrimary"
+        android:textAllCaps="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

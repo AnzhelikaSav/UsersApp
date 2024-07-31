@@ -1,6 +1,7 @@
 package com.example.usersapp.presentation.di
 
 import android.content.Context
+import com.example.usersapp.presentation.details.UserDetailsFragment
 import com.example.usersapp.presentation.list.UserListFragment
 import com.example.usersapp.presentation.main.MainActivity
 import dagger.BindsInstance
@@ -17,6 +18,7 @@ import javax.inject.Singleton
 interface AppComponent {
     fun inject(activity: MainActivity)
     fun inject(fragment: UserListFragment)
+    fun inject(fragment: UserDetailsFragment)
 
     @Component.Builder
     interface Builder {

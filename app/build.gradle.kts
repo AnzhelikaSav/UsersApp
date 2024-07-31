@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.devtools.ksp)
+    id("androidx.navigation.safeargs.kotlin")
     id("kotlin-kapt")
 }
 
