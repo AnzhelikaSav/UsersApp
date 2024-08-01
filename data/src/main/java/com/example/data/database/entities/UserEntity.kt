@@ -20,3 +20,7 @@ data class UserEntity(
         const val IMAGE_URL = "image_url"
     }
 }
+
+data class DeleteUserModel(
+    val uuid: UUID
+)

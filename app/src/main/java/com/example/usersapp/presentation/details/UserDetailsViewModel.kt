@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.domain.models.User
+import com.example.domain.usecase.DeleteUserUseCase
 import com.example.domain.usecase.GetUserByUUIDUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -16,7 +17,8 @@ import java.util.UUID
 
 class UserDetailsViewModel(
     private val uuid: UUID,
-    private val getUserByUUIDUseCase: GetUserByUUIDUseCase
+    private val getUserByUUIDUseCase: GetUserByUUIDUseCase,
+    private val deleteUserUseCase: DeleteUserUseCase
 ) : ViewModel() {
 
     private val _user: MutableLiveData<User> = MutableLiveData()
@@ -25,6 +27,12 @@ class UserDetailsViewModel(
     init {
         viewModelScope.launch {
             _user.value = getUserByUUIDUseCase.execute(uuid)
+        }
+    }
+
+    fun deleteUserClick() {
+        viewModelScope.launch {
+            deleteUserUseCase.execute(uuid)
         }
     }
 }
@@ -36,10 +44,11 @@ interface UserDetailsViewModelFactoryAssisted {
 
 class UserDetailsViewModelFactory @AssistedInject constructor(
     @Assisted private val uuid: UUID,
-    private val getUserByUUIDUseCase: GetUserByUUIDUseCase
+    private val getUserByUUIDUseCase: GetUserByUUIDUseCase,
+    private val deleteUserUseCase: DeleteUserUseCase
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
-        return UserDetailsViewModel(uuid, getUserByUUIDUseCase) as T
+        return UserDetailsViewModel(uuid, getUserByUUIDUseCase, deleteUserUseCase) as T
     }
 }

@@ -10,11 +10,15 @@ import com.example.domain.models.User
 import com.example.usersapp.R
 import com.example.usersapp.databinding.FragmentUserDetailsBinding
 import com.example.usersapp.presentation.di.DiProvider
+import com.example.usersapp.presentation.navigation.Router
 import javax.inject.Inject
 
 class UserDetailsFragment: Fragment(R.layout.fragment_user_details) {
 
     val arg: UserDetailsFragmentArgs by navArgs()
+
+    @Inject
+    lateinit var router: Router
 
     @Inject
     lateinit var vmFactoryAssisted: UserDetailsViewModelFactoryAssisted
@@ -37,6 +41,8 @@ class UserDetailsFragment: Fragment(R.layout.fragment_user_details) {
         viewModel.user.observe(viewLifecycleOwner) {
             setUserInfo(it)
         }
+
+        setListeners()
     }
 
     private fun setUserInfo(user: User) {
@@ -46,5 +52,15 @@ class UserDetailsFragment: Fragment(R.layout.fragment_user_details) {
             .into(binding.ivAvatar)
         binding.tvName.text = user.name
         binding.tvEmail.text = user.email
+    }
+
+    private fun setListeners() {
+        binding.ivBack.setOnClickListener {
+            router.back()
+        }
+        binding.btnDelete.setOnClickListener {
+            viewModel.deleteUserClick()
+            router.back()
+        }
     }
 }

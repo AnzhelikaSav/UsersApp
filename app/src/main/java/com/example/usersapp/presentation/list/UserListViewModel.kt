@@ -20,12 +20,10 @@ class UserListViewModel(
 
     init {
         viewModelScope.launch {
-            _users.value = getUsersUseCase.execute()
+            getUsersUseCase.execute().collect {
+                _users.value = it
+            }
         }
-    }
-
-    fun onUserClick(uuid: UUID) {
-
     }
 }
 
