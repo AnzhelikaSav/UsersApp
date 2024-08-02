@@ -5,6 +5,7 @@ import com.example.data.database.entities.DeleteUserModel
 import com.example.data.generate.UserWithUUID
 import com.example.data.mappers.toDatabase
 import com.example.data.mappers.toDomain
+import com.example.data.mappers.toUserEntity
 import com.example.data.mappers.toUserWithUUID
 import com.example.data.network.api.UsersApi
 import com.example.domain.models.User
@@ -13,6 +14,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import java.util.UUID
 import javax.inject.Inject
@@ -24,23 +26,28 @@ class UserRepositoryImpl @Inject constructor(
 ): UserRepository {
 
     override fun getUsers(): Flow<List<User>> = flow {
-        userDao.getUsers().collect { entities ->
+        userDao.get().collect { entities ->
             if (entities.isEmpty()) {
                 val users = loadUsersFromNetwork()
-                userDao.insertUsers(users.map { it.toDatabase() })
+                userDao.insert(users.map { it.toDatabase() })
             } else {
                 emit(entities.map { it.toDomain() })
             }
         }
     }.flowOn(dispatcher)
 
-    override suspend fun getUserByUUID(uuid: UUID): User = withContext(dispatcher) {
-        userDao.getUserByUUID(uuid).toDomain()
-    }
+    override fun getUserByUUID(uuid: UUID): Flow<User> =
+        userDao.getByUUID(uuid).map { it.toDomain() }
 
     override suspend fun deleteUser(uuid: UUID) = withContext(dispatcher) {
-        userDao.deleteUser(
+        userDao.delete(
             DeleteUserModel(uuid)
+        )
+    }
+
+    override suspend fun update(user: User) = withContext(dispatcher) {
+        userDao.update(
+            user.toUserEntity()
         )
     }
 

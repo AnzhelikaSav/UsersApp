@@ -13,9 +13,9 @@ import com.example.usersapp.presentation.di.DiProvider
 import com.example.usersapp.presentation.navigation.Router
 import javax.inject.Inject
 
-class UserDetailsFragment: Fragment(R.layout.fragment_user_details) {
+class UserDetailsFragment : Fragment(R.layout.fragment_user_details) {
 
-    val arg: UserDetailsFragmentArgs by navArgs()
+    private val arg: UserDetailsFragmentArgs by navArgs()
 
     @Inject
     lateinit var router: Router
@@ -61,6 +61,13 @@ class UserDetailsFragment: Fragment(R.layout.fragment_user_details) {
         binding.btnDelete.setOnClickListener {
             viewModel.deleteUserClick()
             router.back()
+        }
+        binding.btnEdit.setOnClickListener {
+            viewModel.user.value?.uuid?.let { uuid ->
+                val destination =
+                    UserDetailsFragmentDirections.actionUserDetailsFragmentToUserEditFragment(uuid)
+                router.navigateTo(destination)
+            }
         }
     }
 }

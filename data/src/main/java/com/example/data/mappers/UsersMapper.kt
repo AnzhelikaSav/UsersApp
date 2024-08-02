@@ -11,6 +11,7 @@ fun UserNetwork.toUserWithUUID(): UserWithUUID {
         uuid = UUID.randomUUID(),
         name = name,
         email = email,
+        age = dob.age,
         picture = picture
     )
 }
@@ -20,6 +21,7 @@ fun UserWithUUID.toDomain(): User {
         uuid = uuid,
         name = "${name.firstName} ${name.lastName}",
         email = email,
+        age = age,
         imageUrl = picture.mediumUrl
     )
 }
@@ -29,6 +31,7 @@ fun UserWithUUID.toDatabase(): UserEntity {
         uuid = uuid,
         name = "${name.firstName} ${name.lastName}",
         email = email,
+        age = age,
         imageUrl = picture.mediumUrl
     )
 }
@@ -38,6 +41,17 @@ fun UserEntity.toDomain(): User {
         uuid = uuid,
         name = name,
         email = email,
+        age = age,
         imageUrl = imageUrl ?: ""
+    )
+}
+
+fun User.toUserEntity(): UserEntity {
+    return UserEntity(
+        uuid = uuid,
+        name = name,
+        email = email,
+        age = age,
+        imageUrl = imageUrl
     )
 }

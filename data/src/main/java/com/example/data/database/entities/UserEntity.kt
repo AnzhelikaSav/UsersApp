@@ -10,6 +10,7 @@ data class UserEntity(
     @PrimaryKey @ColumnInfo(name = UUID) val uuid: UUID,
     @ColumnInfo(name = NAME) val name: String,
     @ColumnInfo(name = EMAIL) val email: String,
+    @ColumnInfo(name = AGE) val age: Int,
     @ColumnInfo(name = IMAGE_URL) val imageUrl: String?
 ) {
     companion object {
@@ -17,6 +18,7 @@ data class UserEntity(
         const val UUID = "uuid"
         const val NAME = "name"
         const val EMAIL = "email"
+        const val AGE = "age"
         const val IMAGE_URL = "image_url"
     }
 }

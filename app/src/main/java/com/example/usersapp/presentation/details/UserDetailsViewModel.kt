@@ -26,7 +26,9 @@ class UserDetailsViewModel(
 
     init {
         viewModelScope.launch {
-            _user.value = getUserByUUIDUseCase.execute(uuid)
+            getUserByUUIDUseCase.execute(uuid).collect {
+                _user.value = it
+            }
         }
     }
 

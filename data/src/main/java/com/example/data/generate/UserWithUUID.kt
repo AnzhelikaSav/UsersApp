@@ -8,5 +8,6 @@ data class UserWithUUID(
     val uuid: UUID,
     val name: UserNameNetwork,
     val email: String,
+    val age: Int,
     val picture: PictureNetwork
 )

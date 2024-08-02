@@ -13,4 +13,7 @@
     <dimen name="size_24">24dp</dimen>
     <dimen name="size_56">56dp</dimen>
     <dimen name="size_136">136dp</dimen>
+
+    <dimen name="height_48">48dp</dimen>
+    <dimen name="height_56">56dp</dimen>
 </resources>

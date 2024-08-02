@@ -7,6 +7,8 @@ data class UserNetwork(
     val name: UserNameNetwork,
     @SerializedName("email")
     val email: String,
+    @SerializedName("dob")
+    val dob: DayOfBirthNetwork,
     @SerializedName("picture")
     val picture: PictureNetwork
 )
