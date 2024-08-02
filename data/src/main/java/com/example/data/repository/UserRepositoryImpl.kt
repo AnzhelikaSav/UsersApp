@@ -23,9 +23,9 @@ class UserRepositoryImpl @Inject constructor(
     private val usersApi: UsersApi,
     private val userDao: UserDao,
     private val dispatcher: CoroutineDispatcher
-): UserRepository {
+) : UserRepository {
 
-    override fun getUsers(): Flow<List<User>> = flow {
+    override fun getUsers(searchString: String): Flow<List<User>> = flow {
         userDao.get().collect { entities ->
             if (entities.isEmpty()) {
                 val users = loadUsersFromNetwork()
@@ -34,7 +34,13 @@ class UserRepositoryImpl @Inject constructor(
                 emit(entities.map { it.toDomain() })
             }
         }
-    }.flowOn(dispatcher)
+    }.map { users ->
+        users.filter {
+            it.name.lowercase()
+                .contains(searchString.trim().lowercase())
+        }
+    }
+        .flowOn(dispatcher)
 
     override fun getUserByUUID(uuid: UUID): Flow<User> =
         userDao.getByUUID(uuid).map { it.toDomain() }

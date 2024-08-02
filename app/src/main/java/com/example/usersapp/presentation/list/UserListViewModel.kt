@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.domain.models.User
 import com.example.domain.usecase.GetUsersUseCase
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import java.util.UUID
 import javax.inject.Inject
 
 class UserListViewModel(
@@ -24,6 +24,12 @@ class UserListViewModel(
                 _users.value = it
             }
         }
+    }
+
+    fun onSearchChanged(searchString: String) {
+       viewModelScope.launch {
+           _users.value = getUsersUseCase.execute(searchString).first()
+       }
     }
 }
 

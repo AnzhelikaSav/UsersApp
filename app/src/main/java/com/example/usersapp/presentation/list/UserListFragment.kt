@@ -2,6 +2,7 @@ package com.example.usersapp.presentation.list
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,6 +36,10 @@ class UserListFragment: Fragment(R.layout.fragment_user_list) {
         binding = FragmentUserListBinding.bind(view)
 
         setupRecycler()
+
+        binding.etSearch.addTextChangedListener {
+            viewModel.onSearchChanged(it.toString())
+        }
     }
 
     private fun setupRecycler() {
